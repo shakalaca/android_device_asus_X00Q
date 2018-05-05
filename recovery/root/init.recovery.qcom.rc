@@ -1,0 +1,18 @@
+on init
+    wait /dev/block/platform/soc/c0c4000.sdhci
+    symlink /dev/block/platform/soc/c0c4000.sdhci /dev/block/bootdevice
+
+    insmod /sbin/texfat.ko
+
+    start copy_fingerprint
+    start qcom-usb-sh
+
+on fs
+    wait /dev/block/bootdevice/by-name/factory
+    mkdir /factory 0755
+    mount ext4 /dev/block/bootdevice/by-name/factory /factory ro nodev nosuid
+
+service copy_fingerprint /sbin/copy_fingerprint.sh
+    oneshot
+    disabled
+    seclabel u:r:recovery:s0
