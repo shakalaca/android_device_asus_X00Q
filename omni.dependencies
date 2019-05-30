@@ -2,13 +2,13 @@
   {
     "remote": "github",
     "repository": "shakalaca/android_kernel_asus_ze620kl",
-    "revision": "master",
+    "revision": "android-9.0",
     "target_path": "kernel/asus/X00Q"
   },
   {
     "remote": "github",
     "repository": "TeamWin/android_device_qcom_common",
-    "revision": "android-8.0",
+    "revision": "android-9.0",
     "target_path": "device/qcom/common"
   }
 ]

@@ -30,11 +30,11 @@ BOARD_RECOVERY_IMAGE_PREPARE := \
   sed -i 's/ro.product.name=.*/ro.product.name=OPEN_Phone/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default
 
 TEXFAT_MODULE := $(TARGET_RECOVERY_ROOT_OUT)/sbin/texfat.ko
-$(TEXFAT_MODULE): $(ANDROID_PRODUCT_OUT)/kernel
+$(TEXFAT_MODULE): $(PRODUCT_OUT)/kernel
 	@cp $(KERNEL_MODULES_OUT)/texfat.ko $(TEXFAT_MODULE)
-	$(ANDROID_PRODUCT_OUT)/obj/KERNEL_OBJ/scripts/sign-file sha512 \
-		$(ANDROID_PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.pem \
-		$(ANDROID_PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.x509 \
+	$(PRODUCT_OUT)/obj/KERNEL_OBJ/scripts/sign-file sha512 \
+		$(PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.pem \
+		$(PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.x509 \
 		$(TEXFAT_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(TEXFAT_MODULE)

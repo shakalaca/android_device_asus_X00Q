@@ -73,6 +73,8 @@ service qcom-usb-sh /sbin/sh /sbin/init.qcom.usb.sh
     user root
     oneshot
     disabled
+    seclabel u:r:recovery:s0
+
 # --- Init state from init.qcom.usb.rc ---
 
 # +++ Basic function from init.usb.configfs.rc +++
