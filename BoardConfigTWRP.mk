@@ -13,6 +13,10 @@ TW_INCLUDE_NTFS_3G := true
 TW_NO_EXFAT_FUSE := true
 TW_USE_TOOLBOX := true
 
+# Notch margin
+TW_Y_OFFSET := 90
+TW_H_OFFSET := -90
+
 # Correct time
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 TARGET_RECOVERY_DEVICE_MODULE := tzdata
