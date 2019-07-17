@@ -14,12 +14,19 @@
 # limitations under the License.
 #
 
-# Inherit TWRP device configuration
-$(call inherit-product-if-exists, device/asus/X00Q/twrp_X00Q.mk)
+# Release name
+PRODUCT_RELEASE_NAME := X00Q
+
+$(call inherit-product, build/target/product/embedded.mk)
 
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/omni/config/common.mk)
 
+# Inherit from hardware-specific part of the product configuration
+$(call inherit-product, device/asus/X00Q/device.mk)
+
+PRODUCT_DEVICE := X00Q
 PRODUCT_NAME := omni_X00Q
 PRODUCT_BRAND := asus
-PRODUCT_DEVICE := X00Q
+PRODUCT_MODEL := ASUS_X00QD
+PRODUCT_MANUFACTURER := asus

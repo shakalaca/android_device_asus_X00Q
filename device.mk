@@ -14,17 +14,6 @@
 # limitations under the License.
 #
 
-#LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-#PRODUCT_COPY_FILES += \
-#    $(LOCAL_KERNEL):kernel
-
-$(call inherit-product, build/make/target/product/product_launched_with_o.mk)
-$(call inherit-product, frameworks/native/build/phone-xhdpi-2048-dalvik-heap.mk)
-
-# For android_filesystem_config.h
-PRODUCT_PACKAGES += fs_config_files \
-                    fs_config_dirs
-
 # b/30349163
 # Set default log size on userdebug/eng build to 1M
 ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
@@ -33,8 +22,6 @@ endif
 
 # for stock ROM
 PRODUCT_PROPERTY_OVERRIDES += ro.config.CID=CID_ERROR
-#ro.build.product=ZE620KL \
-#ro.product.device=ASUS_X00QD
 
 ASUS_BUILD_PROJECT := ZE620KL
 export ASUS_BUILD_PROJECT
