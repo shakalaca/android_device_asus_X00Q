@@ -16,13 +16,8 @@
 
 ifeq ($(TARGET_DEVICE),X00Q)
 
-NEW_PLATFORM_VERSION := 9
-NEW_PLATFORM_SECURITY_PATCH := 2019-05-01
-
 LOCAL_PATH := $(call my-dir)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
-
-include $(CLEAR_VARS)
 
 BOARD_RECOVERY_IMAGE_PREPARE := \
   sed -i 's/ro.build.version.security_patch=.*/ro.build.version.security_patch=$(NEW_PLATFORM_SECURITY_PATCH)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default ;\
@@ -38,4 +33,5 @@ $(TEXFAT_MODULE): $(PRODUCT_OUT)/kernel
 		$(TEXFAT_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(TEXFAT_MODULE)
+
 endif
