@@ -21,8 +21,7 @@ include $(call all-subdir-makefiles,$(LOCAL_PATH))
 
 BOARD_RECOVERY_IMAGE_PREPARE := \
   sed -i 's/ro.build.version.security_patch=.*/ro.build.version.security_patch=$(NEW_PLATFORM_SECURITY_PATCH)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default ;\
-  sed -i 's/ro.build.version.release=.*/ro.build.version.release=$(NEW_PLATFORM_VERSION)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default ;\
-  sed -i 's/ro.product.name=.*/ro.product.name=OPEN_Phone/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default
+  sed -i 's/ro.build.version.release=.*/ro.build.version.release=$(NEW_PLATFORM_VERSION)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default
 
 TEXFAT_MODULE := $(TARGET_RECOVERY_ROOT_OUT)/sbin/texfat.ko
 $(TEXFAT_MODULE): $(PRODUCT_OUT)/kernel

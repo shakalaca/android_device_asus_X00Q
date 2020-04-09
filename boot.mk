@@ -14,14 +14,14 @@
 # limitations under the License.
 #
 
-INTERNAL_MKBOOTIMG_VERSION_ARGS := \
+INTERNAL_MKBOOTIMG_VERSION_ARGS_NEW := \
     --os_version $(NEW_PLATFORM_VERSION) \
     --os_patch_level $(NEW_PLATFORM_SECURITY_PATCH)
 
 $(INSTALLED_RECOVERYIMAGE_TARGET): $(MKBOOTIMG) $(recovery_ramdisk) $(recovery_kernel)
 	@echo ----- Making recovery image ------
 #	$(call build-recoveryimage-target, $@)
-	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(INTERNAL_MKBOOTIMG_VERSION_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@ --id > $(RECOVERYIMAGE_ID_FILE)
+	$(hide) $(MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(INTERNAL_MKBOOTIMG_VERSION_ARGS_NEW) $(BOARD_MKBOOTIMG_ARGS) --output $@ --id > $(RECOVERYIMAGE_ID_FILE)
 	$(hide) $(call assert-max-image-size,$@,$(call get-hash-image-max-size,$(BOARD_BOOTIMAGE_PARTITION_SIZE)))
 
 # copy from build/core/Makefile

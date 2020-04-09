@@ -59,4 +59,4 @@ BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 # security version
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/boot.mk
 
--include device/asus/X00Q/BoardConfigTWRP.mk
+-include $(DEVICE_PATH)/BoardConfigTWRP.mk
