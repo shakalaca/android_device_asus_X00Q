@@ -19,19 +19,26 @@ ifeq ($(TARGET_DEVICE),X00Q)
 LOCAL_PATH := $(call my-dir)
 include $(call all-subdir-makefiles,$(LOCAL_PATH))
 
-BOARD_RECOVERY_IMAGE_PREPARE := \
+BOARD_RECOVERY_PATCH_SECURITY_PROPS := \
   sed -i 's/ro.build.version.security_patch=.*/ro.build.version.security_patch=$(NEW_PLATFORM_SECURITY_PATCH)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default ;\
-  sed -i 's/ro.build.version.release=.*/ro.build.version.release=$(NEW_PLATFORM_VERSION)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default ;\
-  sed -i 's/ro.product.name=.*/ro.product.name=OPEN_Phone/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default
+  sed -i 's/ro.build.version.release=.*/ro.build.version.release=$(NEW_PLATFORM_VERSION)/g' $(TARGET_RECOVERY_ROOT_OUT)/prop.default
 
-TEXFAT_MODULE := $(TARGET_RECOVERY_ROOT_OUT)/sbin/texfat.ko
-$(TEXFAT_MODULE): $(PRODUCT_OUT)/kernel
-	@cp $(KERNEL_MODULES_OUT)/texfat.ko $(TEXFAT_MODULE)
-	$(PRODUCT_OUT)/obj/KERNEL_OBJ/scripts/sign-file sha512 \
-		$(PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.pem \
-		$(PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.x509 \
-		$(TEXFAT_MODULE)
+BOARD_RECOVERY_UPDATE_MODULES := \
+  cp $(LOCAL_PATH)/prebuilt/$(NEW_PLATFORM_SECURITY_PATCH)/texfat_user.ko $(TARGET_RECOVERY_ROOT_OUT)/vendor/lib/modules/ ;\
+  cp $(LOCAL_PATH)/prebuilt/$(NEW_PLATFORM_SECURITY_PATCH)/tntfs_user.ko $(TARGET_RECOVERY_ROOT_OUT)/vendor/lib/modules
 
-ALL_DEFAULT_INSTALLED_MODULES += $(TEXFAT_MODULE)
+#TEXFAT_MODULE := $(TARGET_RECOVERY_ROOT_OUT)/sbin/texfat.ko
+#$(TEXFAT_MODULE): $(PRODUCT_OUT)/kernel
+#	@cp $(KERNEL_MODULES_OUT)/texfat.ko $(TEXFAT_MODULE)
+#	$(PRODUCT_OUT)/obj/KERNEL_OBJ/scripts/sign-file sha512 \
+#		$(PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.pem \
+#		$(PRODUCT_OUT)/obj/KERNEL_OBJ/certs/signing_key.x509 \
+#		$(TEXFAT_MODULE)
+#
+#ALL_DEFAULT_INSTALLED_MODULES += $(TEXFAT_MODULE)
+
+BOARD_RECOVERY_IMAGE_PREPARE := \
+  $(BOARD_RECOVERY_PATCH_SECURITY_PROPS) ;\
+  $(BOARD_RECOVERY_UPDATE_MODULES)
 
 endif

@@ -1,6 +1,6 @@
 DEVICE_PATH := device/asus/X00Q
-NEW_PLATFORM_VERSION := 9
-NEW_PLATFORM_SECURITY_PATCH := 2019-05-01
+NEW_PLATFORM_VERSION := 10
+NEW_PLATFORM_SECURITY_PATCH := 2020-03-01
 
 # Bootloader
 TARGET_NO_BOOTLOADER := true
@@ -48,7 +48,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_CONFIG := ze620kl-user-sdm660-perf_defconfig
 TARGET_KERNEL_SOURCE := kernel/asus/X00Q
 # Only when you don't have the source
-#TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/kernel
+TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/$(NEW_PLATFORM_SECURITY_PATCH)/kernel
 
 TARGET_HW_DISK_ENCRYPTION := true
 
@@ -59,4 +59,4 @@ BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 # security version
 BOARD_CUSTOM_BOOTIMG_MK := $(DEVICE_PATH)/boot.mk
 
--include device/asus/X00Q/BoardConfigTWRP.mk
+-include $(DEVICE_PATH)/BoardConfigTWRP.mk

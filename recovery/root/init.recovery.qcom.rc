@@ -2,17 +2,63 @@ on init
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
 
-    insmod /sbin/texfat.ko
+    insmod /vendor/lib/modules/texfat_user.ko
+    insmod /vendor/lib/modules/tntfs_user.ko
 
-    start copy_fingerprint
-    start qcom-usb-sh
+    start hwservicemanager
+    setprop crypto.ready 1
+
+on boot
+    setprop sys.usb.configfs 1
+    setprop sys.usb.config adb
 
 on fs
-    wait /dev/block/bootdevice/by-name/factory
-    mkdir /factory 0755
-    mount ext4 /dev/block/bootdevice/by-name/factory /factory ro nodev nosuid
+    chmod 0660 /dev/qseecom
+    chown system drmrpc /dev/qseecom
+    chmod 0664 /dev/ion
+    chown system system /dev/ion
 
-service copy_fingerprint /sbin/copy_fingerprint.sh
-    oneshot
+service hwservicemanager /sbin/hwservicemanager
+    user root
+    group root
+    disabled
+    onrestart setprop hwservicemanager.ready false
+    seclabel u:r:recovery:s0
+
+service qseecomd /vendor/bin/qseecomd
+    user root
+    group root
     disabled
     seclabel u:r:recovery:s0
+
+service keymaster-3-0 /vendor/bin/hw/android.hardware.keymaster@3.0-service-qti
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service gatekeeper-1-0 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service-qti
+    user root
+    group root
+    disabled
+    seclabel u:r:recovery:s0
+
+service servicemanager /sbin/servicemanager
+    user root
+    group root readproc
+    disabled
+    seclabel u:r:recovery:s0
+    
+on property:crypto.ready=0
+    stop qseecomd
+    stop keymaster-3-0
+    stop gatekeeper-1-0
+    stop servicemanager
+
+on property:crypto.ready=1
+    start qseecomd
+
+on property:vendor.sys.listeners.registered=true
+    start keymaster-3-0
+    start gatekeeper-1-0
+    start servicemanager
